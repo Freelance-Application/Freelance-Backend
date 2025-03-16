@@ -5,7 +5,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '@prisma/client';
+import { RoleUser } from '@prisma/client';
 import { Request } from 'express';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
@@ -14,7 +14,7 @@ export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRoles = this.reflector.get<Role[]>(
+    const requiredRoles = this.reflector.get<RoleUser[]>(
       'roles',
       context.getHandler(),
     );

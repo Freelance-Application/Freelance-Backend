@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto';
-import { Role, User } from '@prisma/client';
+import { RoleUser, User } from '@prisma/client';
 import { hashString } from '../commons/bcrypt.utils';
 import { UsersRepository } from './users.repository';
 
@@ -20,7 +20,7 @@ export class UsersService {
   }
 
   async create(data: CreateUserDto) {
-    const payload = { ...data, role: Role.USER };
+    const payload = { ...data, role: RoleUser.USER };
     const emailHasTaken = await this.findByEmail(data.email);
     if (emailHasTaken) {
       throw new ForbiddenException('Email already exists');

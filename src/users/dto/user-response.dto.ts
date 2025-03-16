@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
+import { RoleUser } from '@prisma/client';
 
 export class UserResponseDto {
   @ApiProperty()
@@ -15,7 +15,7 @@ export class UserResponseDto {
   email: string;
 
   @ApiProperty()
-  role: Role;
+  role: RoleUser;
 
   @ApiProperty()
   createdAt: Date;
