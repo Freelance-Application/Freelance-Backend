@@ -10,11 +10,10 @@ import {
   Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { UserDto } from './dto/user.dto';
 import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
 
 @Controller('users')

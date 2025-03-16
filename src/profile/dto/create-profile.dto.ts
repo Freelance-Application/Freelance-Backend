@@ -2,14 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
 
-export class CreateSkillDto {
+export class CreateProfileDto {
   @IsString()
-  @Transform(({ value }) => String(value).trim())
   @ApiProperty()
-  name: string;
+  @Transform(({ value }) => String(value).toUpperCase())
+  university: string;
 
   @IsString()
-  @Transform(({ value }) => String(value).trim())
   @ApiProperty()
-  description: string;
+  @Transform(({ value }) => String(value).toLowerCase().trim())
+  bio: string;
 }

@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateSkillDto } from './dto/create-skill.dto';
 import { SkillsRepository } from './skill.repository';
-import { UpdateSkillDto } from './dto/update-skill.dto';
+import { CreateSkillDto, UpdateSkillDto } from './dto';
 
 @Injectable()
 export class SkillService {
@@ -25,7 +24,10 @@ export class SkillService {
 
   async update(id: string, updateSkillDto: UpdateSkillDto) {
     const skill = await this.findOne(id);
-    return this.skillRepository.update(id, { ...skill, ...updateSkillDto });
+    return this.skillRepository.update(id, {
+      name: updateSkillDto.name ?? skill.name,
+      description: updateSkillDto.description ?? skill.description,
+    });
   }
 
   async remove(id: string) {

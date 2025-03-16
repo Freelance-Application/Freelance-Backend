@@ -9,15 +9,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { SkillDto } from './dto/skill.dto';
-import { CreateSkillDto } from './dto/create-skill.dto';
 import { SkillService } from './skill.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RoleUser } from '@prisma/client';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { UpdateSkillDto } from './dto/update-skill.dto';
 import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
+import { CreateSkillDto, SkillDto, UpdateSkillDto } from './dto';
 
 @Controller('skill')
 export class SkillController {

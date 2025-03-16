@@ -12,23 +12,31 @@ export class UsersRepository {
   }
 
   async findByEmail(email: string) {
-    return this.database.user.findUnique({ where: { email } });
+    return this.database.user.findUnique({
+      where: { email },
+      include: { profile: true },
+    });
   }
 
   async findAll() {
     return this.database.user.findMany({
       where: { deletedAt: null },
+      include: { profile: true },
     });
   }
 
   async findById(id: string) {
-    return this.database.user.findUnique({ where: { id, deletedAt: null } });
+    return this.database.user.findUnique({
+      where: { id, deletedAt: null },
+      include: { profile: true },
+    });
   }
 
   async update(id: string, data: UpdateUserDto) {
     return this.database.user.update({
       where: { id },
       data: { ...data, updatedAt: new Date() },
+      include: { profile: true },
     });
   }
 

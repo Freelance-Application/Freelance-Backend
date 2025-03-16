@@ -52,12 +52,22 @@ export class UsersService {
   }
 
   async update(userId: string, data: UpdateUserDto) {
-    const userFound = await this.findOne(userId);
+    const user = await this.repository.findById(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
     if (data.password) {
       const password = await hashString(data.password);
       data.password = password;
     }
-    const payload = { ...userFound, ...data };
+
+    const payload = {
+      name: data.name ?? user.name,
+      password: data.password ?? user.password,
+      lastname: data.lastname ?? user.lastname,
+    };
+
     const newUser = await this.repository.update(userId, payload);
     return UsersService.sanitize(newUser);
   }
@@ -66,7 +76,7 @@ export class UsersService {
     const user = await this.findOne(id);
     await this.repository.delete(
       id,
-      `${user!.email}_deleted_${new Date().toString()}`,
+      `${user!.email}_deleted_${new Date().toISOString()}`,
     );
     return {
       msg: 'User deleted successfully',

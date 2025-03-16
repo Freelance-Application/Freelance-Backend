@@ -5,9 +5,7 @@ import { IsEmail, IsString, MinLength } from 'class-validator';
 export class CreateUserDto {
   @IsString()
   @ApiProperty()
-  @Transform(({ value }) =>
-    value !== undefined ? String(value).trim() : undefined,
-  )
+  @Transform(({ value }) => String(value).trim())
   name: string;
 
   @IsEmail()
@@ -17,15 +15,11 @@ export class CreateUserDto {
 
   @IsString()
   @ApiProperty()
-  @Transform(({ value }) =>
-    value !== undefined ? String(value).trim() : undefined,
-  )
+  @Transform(({ value }) => String(value).trim())
   lastname: string;
 
   @IsString()
-  @Transform(({ value }) =>
-    value !== undefined ? String(value).trim() : undefined,
-  )
+  @Transform(({ value }) => String(value).trim())
   @MinLength(5, { message: 'Password must be at least 5 characters long' })
   @ApiProperty()
   password: string;
