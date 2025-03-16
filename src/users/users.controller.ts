@@ -14,7 +14,7 @@ import { CreateUserDto, UpdateUserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { UserResponseDto } from './dto/user-response.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,7 +24,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({
     status: 201,
-    type: UserResponseDto,
+    type: UserDto,
   })
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
@@ -33,7 +33,7 @@ export class UsersController {
   @Get()
   @ApiResponse({
     status: 200,
-    type: [UserResponseDto],
+    type: [UserDto],
   })
   @ApiOperation({ summary: 'Find all users' })
   findAll() {
@@ -43,7 +43,7 @@ export class UsersController {
   @Get(':id')
   @ApiResponse({
     status: 200,
-    type: UserResponseDto,
+    type: UserDto,
   })
   @ApiOperation({ summary: 'Find user' })
   findOne(@Param('id') id: string) {
@@ -56,7 +56,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
-    type: UserResponseDto,
+    type: UserDto,
   })
   update(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(req.user!.userId, updateUserDto);
