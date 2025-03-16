@@ -15,6 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UserDto } from './dto/user.dto';
+import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
 
 @Controller('users')
 export class UsersController {
@@ -63,12 +64,13 @@ export class UsersController {
   }
 
   @Delete('')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remove user' })
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'User deleted successfully',
-    type: String,
+    type: MessageResponseDto,
   })
   remove(@Req() req: Request) {
     return this.usersService.remove(req.user!.userId);

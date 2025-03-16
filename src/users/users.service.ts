@@ -68,6 +68,8 @@ export class UsersService {
       id,
       `${user!.email}_deleted_${new Date().toString()}`,
     );
-    return 'User deleted successfully';
+    return {
+      msg: 'User deleted successfully',
+    };
   }
 }

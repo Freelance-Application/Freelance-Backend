@@ -26,13 +26,16 @@ export class UsersRepository {
   }
 
   async update(id: string, data: UpdateUserDto) {
-    return this.database.user.update({ where: { id }, data });
+    return this.database.user.update({
+      where: { id },
+      data: { ...data, updatedAt: new Date() },
+    });
   }
 
   async delete(id: string, email: string) {
     return this.database.user.update({
       where: { id },
-      data: { deletedAt: new Date(), email },
+      data: { deletedAt: new Date(), email, updatedAt: new Date() },
     });
   }
 }

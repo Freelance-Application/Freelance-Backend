@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
+import { UpdateUserDto } from 'src/users/dto';
 
 @Injectable()
 export class SkillsRepository {
@@ -20,14 +21,20 @@ export class SkillsRepository {
     return this.database.skill.findUnique({ where: { id, deletedAt: null } });
   }
 
-  /* async update(id: string, data: UpdateUserDto) {
-    return this.database.user.update({ where: { id }, data });
-  } */
+  async update(id: string, data: UpdateUserDto) {
+    return this.database.skill.update({
+      where: { id },
+      data: {
+        ...data,
+        updatedAt: new Date(),
+      },
+    });
+  }
 
   async delete(id: string) {
     return this.database.skill.update({
       where: { id },
-      data: { deletedAt: new Date() },
+      data: { deletedAt: new Date(), updatedAt: new Date() },
     });
   }
 }

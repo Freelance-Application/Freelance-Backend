@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-export class CreateSkillDto {
+export class UpdateSkillDto {
   @IsString()
   @Transform(({ value }) =>
     value !== undefined ? String(value).trim() : undefined,
   )
+  @IsOptional()
   @ApiProperty()
   name: string;
 
@@ -14,6 +15,7 @@ export class CreateSkillDto {
   @Transform(({ value }) =>
     value !== undefined ? String(value).trim() : undefined,
   )
+  @IsOptional()
   @ApiProperty()
   description: string;
 }
