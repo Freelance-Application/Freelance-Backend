@@ -13,6 +13,9 @@ export class ProfileRepository {
         bio: data.bio,
         userId,
       },
+      include: {
+        skills: true,
+      },
     });
   }
 
@@ -26,8 +29,12 @@ export class ProfileRepository {
     return this.database.profile.update({
       where: { id },
       data: {
-        ...data,
+        university: data.university,
+        bio: data.bio,
         updatedAt: new Date(),
+      },
+      include: {
+        skills: true,
       },
     });
   }

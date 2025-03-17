@@ -37,4 +37,8 @@ export class SkillService {
       msg: 'Skill deleted successfully',
     };
   }
+
+  async findManyByIds(ids: string[]) {
+    return this.skillRepository.findManyByIds(ids);
+  }
 }

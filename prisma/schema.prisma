@@ -30,17 +30,6 @@ model User {
   @@index([lastname])
 }
 
-model Skill {
-  id            String        @id @default(uuid())
-  name          String
-  description   String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  deletedAt     DateTime?
-
-  @@index([name])
-}
-
 model Profile {
   id            String        @id @default(uuid())
   userId        String        @unique
@@ -50,5 +39,36 @@ model Profile {
   updatedAt     DateTime      @updatedAt
   deletedAt     DateTime?
 
-  user        User            @relation(fields: [userId], references: [id])
+  user          User          @relation(fields: [userId], references: [id])
+  skills        UserSkill[]
+}
+
+model Skill {
+  id            String        @id @default(uuid())
+  name          String
+  description   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+
+  profiles      UserSkill[]
+
+  @@index([name])
+}
+
+model UserSkill {
+  id            String        @id @default(uuid())
+  profileId     String
+  skillId       String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+  level         Int
+  description   String
+
+  profile       Profile       @relation(fields: [profileId], references: [id])
+  skill         Skill         @relation(fields: [skillId], references: [id])
+
+  @@unique([profileId, skillId])
+  @@index([description])
 }

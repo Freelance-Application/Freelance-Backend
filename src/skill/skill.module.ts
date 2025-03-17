@@ -8,5 +8,6 @@ import { DatabaseModule } from 'src/database/database.module';
   controllers: [SkillController],
   providers: [SkillService, SkillsRepository],
   imports: [DatabaseModule],
+  exports: [SkillService],
 })
 export class SkillModule {}

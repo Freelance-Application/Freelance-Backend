@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsOptional, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsArray, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { CreateUserSkillDto } from 'src/user-skill/dto/create-user-skill.dto';
 
 export class UpdateProfileDto {
   @IsString()
@@ -18,4 +19,11 @@ export class UpdateProfileDto {
   )
   @ApiProperty()
   bio?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateUserSkillDto)
+  @ApiProperty({ type: [CreateUserSkillDto] })
+  skills?: CreateUserSkillDto[];
 }

@@ -36,4 +36,10 @@ export class SkillsRepository {
       data: { deletedAt: new Date(), updatedAt: new Date() },
     });
   }
+
+  async findManyByIds(ids: string[]) {
+    return this.database.skill.findMany({
+      where: { id: { in: ids }, deletedAt: null },
+    });
+  }
 }

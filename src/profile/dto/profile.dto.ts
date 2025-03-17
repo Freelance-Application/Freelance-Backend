@@ -1,16 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateProfileDto } from './create-profile.dto';
-import { RoleUser } from '@prisma/client';
+import { UserSkillDto } from 'src/user-skill/dto/user-skill.dto';
 
-export class ProfileDto extends CreateProfileDto {
+export class ProfileDto {
+  @ApiProperty()
+  university: string;
+
+  @ApiProperty()
+  bio: string;
+
   @ApiProperty({ description: 'Profile ID' })
   id: string;
 
   @ApiProperty({ description: 'User ID' })
   userId: string;
-
-  @ApiProperty()
-  role: RoleUser;
 
   @ApiProperty()
   createdAt: Date;
@@ -20,4 +22,7 @@ export class ProfileDto extends CreateProfileDto {
 
   @ApiProperty({ nullable: true })
   deletedAt?: Date;
+
+  @ApiProperty({ type: [UserSkillDto] })
+  skills: UserSkillDto[];
 }
