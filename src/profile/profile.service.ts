@@ -74,7 +74,7 @@ export class ProfileService {
       university: updateProfileDto.university ?? profile.university,
     });
 
-    if (hasUserSkills) {
+    if (updateProfileDto.skills !== undefined) {
       const userSkills = await this.userSkillService.update(
         profile.id,
         newSkills,

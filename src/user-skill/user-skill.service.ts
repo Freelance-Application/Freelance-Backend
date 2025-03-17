@@ -12,8 +12,10 @@ export class UserSkillService {
   }
 
   async create(profileId: string, userSkillsDto: CreateUserSkillDto[]) {
-    await this.userSkillRepository.createMany(profileId, userSkillsDto);
-    return this.userSkillRepository.findByProfileId(profileId);
+    return this.userSkillRepository.createManyAndReturn(
+      profileId,
+      userSkillsDto,
+    );
   }
 
   async deleteMany(userSkillsId: string[]) {

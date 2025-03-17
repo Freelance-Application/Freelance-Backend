@@ -27,12 +27,18 @@ export class UserSkillRepository {
     });
   }
 
-  async createMany(profileId: string, userSkillsDto: CreateUserSkillDto[]) {
-    return this.database.userSkill.createMany({
+  async createManyAndReturn(
+    profileId: string,
+    userSkillsDto: CreateUserSkillDto[],
+  ) {
+    return this.database.userSkill.createManyAndReturn({
       data: userSkillsDto.map((userSkill) => ({
         ...userSkill,
         profileId,
       })),
+      include: {
+        skill: true,
+      },
     });
   }
 
