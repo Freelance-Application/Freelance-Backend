@@ -1,18 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { CreateUserDto } from './create-user.dto';
 import { RoleUser } from '@prisma/client';
 
-export class UserResponseDto {
+export class UserDto extends OmitType(CreateUserDto, ['password'] as const) {
   @ApiProperty()
   id: string;
-
-  @ApiProperty()
-  name: string;
-
-  @ApiProperty()
-  lastname: string;
-
-  @ApiProperty()
-  email: string;
 
   @ApiProperty()
   role: RoleUser;
