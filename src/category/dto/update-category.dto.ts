@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsOptional, IsString } from 'class-validator';
 
-export class UpdateSkillDto {
+export class UpdateCategoryDto {
   @IsString()
   @Transform(({ value }) =>
     value !== undefined ? String(value).toUpperCase().trim() : undefined,

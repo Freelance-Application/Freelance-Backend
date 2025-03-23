@@ -5,6 +5,9 @@ import { AuthModule } from './auth/auth.module';
 import { SkillModule } from './skill/skill.module';
 import { ProfileModule } from './profile/profile.module';
 import { UserSkillModule } from './user-skill/user-skill.module';
+import { ServiceModule } from './service/service.module';
+import { CategoryModule } from './category/category.module';
+import { ServiceCategoryModule } from './service-category/service-category.module';
 
 @Module({
   imports: [
@@ -14,6 +17,9 @@ import { UserSkillModule } from './user-skill/user-skill.module';
     SkillModule,
     ProfileModule,
     UserSkillModule,
+    ServiceModule,
+    CategoryModule,
+    ServiceCategoryModule,
   ],
 })
 export class AppModule {}

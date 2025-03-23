@@ -28,7 +28,17 @@ export class UsersRepository {
   async findById(id: string) {
     return this.database.user.findUnique({
       where: { id, deletedAt: null },
-      include: { profile: true },
+      include: {
+        profile: {
+          include: {
+            skills: {
+              include: {
+                skill: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 

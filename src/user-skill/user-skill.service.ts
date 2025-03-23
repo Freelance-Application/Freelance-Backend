@@ -5,21 +5,18 @@ import { CreateUserSkillDto } from './dto/create-user-skill.dto';
 
 @Injectable()
 export class UserSkillService {
-  constructor(private readonly userSkillRepository: UserSkillRepository) {}
+  constructor(private readonly repository: UserSkillRepository) {}
 
   async findByProfileId(profileId: string) {
-    return this.userSkillRepository.findByProfileId(profileId);
+    return this.repository.findByProfileId(profileId);
   }
 
   async create(profileId: string, userSkillsDto: CreateUserSkillDto[]) {
-    return this.userSkillRepository.createManyAndReturn(
-      profileId,
-      userSkillsDto,
-    );
+    return this.repository.createManyAndReturn(profileId, userSkillsDto);
   }
 
   async deleteMany(userSkillsId: string[]) {
-    return this.userSkillRepository.deleteMany(userSkillsId);
+    return this.repository.deleteMany(userSkillsId);
   }
 
   async updateMany(
@@ -33,7 +30,7 @@ export class UserSkillService {
       );
 
       if (toUpdateUserSkill) {
-        const updatedUserSkill = await this.userSkillRepository.update(
+        const updatedUserSkill = await this.repository.update(
           toUpdateUserSkill?.id,
           {
             level: userSkillDto.level ?? toUpdateUserSkill.level,
@@ -50,14 +47,13 @@ export class UserSkillService {
   }
 
   async update(profileId: string, userSkillsDto: CreateUserSkillDto[]) {
-    const userSkills =
-      await this.userSkillRepository.findByProfileId(profileId);
+    const userSkills = await this.repository.findByProfileId(profileId);
     const newUserSkills: UserSkill[] = [];
 
     const skillsToDelete = this.getSkillsToDelete(userSkills, userSkillsDto);
     if (skillsToDelete.length > 0) {
       const skillsToDeleteId = skillsToDelete.map((skill) => skill.id);
-      await this.userSkillRepository.deleteMany(skillsToDeleteId);
+      await this.repository.deleteMany(skillsToDeleteId);
     }
 
     const skillsToCreate = this.getSkillsToCreate(userSkills, userSkillsDto);

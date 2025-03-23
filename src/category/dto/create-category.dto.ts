@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
 
-export class CreateSkillDto {
+export class CreateCategoryDto {
   @IsString()
   @Transform(({ value }) => String(value).toUpperCase().trim())
   @ApiProperty()

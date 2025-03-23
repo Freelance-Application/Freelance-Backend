@@ -22,6 +22,25 @@ export class ProfileRepository {
   async findByUserId(userId: string) {
     return this.database.profile.findUnique({
       where: { userId, deletedAt: null },
+      include: {
+        skills: {
+          include: {
+            skill: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            lastname: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true,
+            role: true,
+          },
+        },
+      },
     });
   }
 
@@ -35,6 +54,36 @@ export class ProfileRepository {
       },
       include: {
         skills: true,
+      },
+    });
+  }
+
+  async findAll() {
+    return this.database.profile.findMany({
+      where: { deletedAt: null },
+      include: {
+        skills: {
+          include: {
+            skill: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            lastname: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true,
+            role: true,
+          },
+        },
+      },
+      orderBy: {
+        user: {
+          name: 'asc',
+        },
       },
     });
   }

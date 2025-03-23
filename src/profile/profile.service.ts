@@ -11,13 +11,13 @@ import { SkillService } from 'src/skill/skill.service';
 @Injectable()
 export class ProfileService {
   constructor(
-    private readonly profileRepository: ProfileRepository,
+    private readonly repository: ProfileRepository,
     private readonly userSkillService: UserSkillService,
     private readonly skillService: SkillService,
   ) {}
 
   async create(userId: string, createProfileDto: CreateProfileDto) {
-    const profileExists = await this.findByUserId(userId);
+    const profileExists = await this.repository.findByUserId(userId);
     if (profileExists) {
       throw new ConflictException('User already has a profile');
     }
@@ -32,10 +32,7 @@ export class ProfileService {
       }
     }
 
-    const profile = await this.profileRepository.create(
-      userId,
-      createProfileDto,
-    );
+    const profile = await this.repository.create(userId, createProfileDto);
 
     if (hasUserSkills) {
       const userSkills = await this.userSkillService.create(
@@ -49,14 +46,15 @@ export class ProfileService {
   }
 
   async findByUserId(userId: string) {
-    return this.profileRepository.findByUserId(userId);
+    const profile = await this.repository.findByUserId(userId);
+    if (!profile) {
+      throw new NotFoundException('User does not have a profile');
+    }
+    return profile;
   }
 
   async update(userId: string, updateProfileDto: UpdateProfileDto) {
     const profile = await this.findByUserId(userId);
-    if (!profile) {
-      throw new NotFoundException('User does not have a profile');
-    }
 
     const newSkills = updateProfileDto.skills ?? [];
     const hasUserSkills = newSkills.length > 0;
@@ -69,7 +67,7 @@ export class ProfileService {
       }
     }
 
-    const newProfile = await this.profileRepository.update(profile.id, {
+    const newProfile = await this.repository.update(profile.id, {
       bio: updateProfileDto.bio ?? profile.bio,
       university: updateProfileDto.university ?? profile.university,
     });
@@ -83,5 +81,9 @@ export class ProfileService {
     }
 
     return newProfile;
+  }
+
+  async list() {
+    return this.repository.findAll();
   }
 }
