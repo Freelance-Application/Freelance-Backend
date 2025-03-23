@@ -4,7 +4,7 @@ import { IsString } from 'class-validator';
 
 export class CreateCategoryDto {
   @IsString()
-  @Transform(({ value }) => String(value).toUpperCase().trim())
+  @Transform(({ value }) => String(value).trim())
   @ApiProperty()
   name: string;
 

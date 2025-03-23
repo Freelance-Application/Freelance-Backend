@@ -5,7 +5,7 @@ import { ServiceService } from './service.service';
 
 @Controller('service')
 export class ServiceController {
-  constructor(private readonly serviceService: ServiceService) {}
+  constructor(private readonly service: ServiceService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
@@ -26,6 +26,6 @@ export class ServiceController {
     type: String,
   })
   list() {
-    return 'Service listed';
+    return this.service.list();
   }
 }

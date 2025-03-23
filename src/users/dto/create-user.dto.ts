@@ -10,7 +10,7 @@ export class CreateUserDto {
 
   @IsEmail()
   @ApiProperty()
-  @Transform(({ value }) => String(value).toLowerCase())
+  @Transform(({ value }) => String(value).toLowerCase().toLowerCase())
   email: string;
 
   @IsString()

@@ -15,7 +15,7 @@ export class UpdateProfileDto {
   @IsString()
   @IsOptional()
   @Transform(({ value }) =>
-    value !== undefined ? String(value).toLowerCase().trim() : undefined,
+    value !== undefined ? String(value).trim() : undefined,
   )
   @ApiProperty()
   bio?: string;

@@ -18,7 +18,7 @@ import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly service: UsersService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create user' })
@@ -27,7 +27,7 @@ export class UsersController {
     type: UserDto,
   })
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    return this.service.create(createUserDto);
   }
 
   @Get()
@@ -37,7 +37,7 @@ export class UsersController {
   })
   @ApiOperation({ summary: 'Find all users' })
   findAll() {
-    return this.usersService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
@@ -47,7 +47,7 @@ export class UsersController {
   })
   @ApiOperation({ summary: 'Find user' })
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    return this.service.findOne(id);
   }
 
   @Put('')
@@ -59,7 +59,7 @@ export class UsersController {
     type: UserDto,
   })
   update(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(req.user!.userId, updateUserDto);
+    return this.service.update(req.user!.userId, updateUserDto);
   }
 
   @Delete('')
@@ -72,6 +72,6 @@ export class UsersController {
     type: MessageResponseDto,
   })
   remove(@Req() req: Request) {
-    return this.usersService.remove(req.user!.userId);
+    return this.service.remove(req.user!.userId);
   }
 }

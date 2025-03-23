@@ -19,7 +19,7 @@ import { CreateSkillDto, SkillDto, UpdateSkillDto } from './dto';
 
 @Controller('skill')
 export class SkillController {
-  constructor(private readonly skillService: SkillService) {}
+  constructor(private readonly service: SkillService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create skill' })
@@ -31,7 +31,7 @@ export class SkillController {
   @Roles(RoleUser.ADMIN)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   create(@Body() createSkillDto: CreateSkillDto) {
-    return this.skillService.create(createSkillDto);
+    return this.service.create(createSkillDto);
   }
 
   @Get()
@@ -41,7 +41,7 @@ export class SkillController {
     type: [SkillDto],
   })
   async findAll() {
-    return this.skillService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
@@ -51,7 +51,7 @@ export class SkillController {
     type: SkillDto,
   })
   async findOne(@Param('id') id: string) {
-    return this.skillService.findOne(id);
+    return this.service.findOne(id);
   }
 
   @Put(':id')
@@ -67,7 +67,7 @@ export class SkillController {
     @Param('id') id: string,
     @Body() updateSkillDto: UpdateSkillDto,
   ) {
-    return this.skillService.update(id, updateSkillDto);
+    return this.service.update(id, updateSkillDto);
   }
 
   @Delete(':id')
@@ -81,6 +81,6 @@ export class SkillController {
   @Roles(RoleUser.ADMIN)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   async remove(@Param('id') id: string) {
-    return this.skillService.remove(id);
+    return this.service.remove(id);
   }
 }

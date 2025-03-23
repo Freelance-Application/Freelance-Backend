@@ -5,7 +5,7 @@ import { IsOptional, IsString } from 'class-validator';
 export class UpdateSkillDto {
   @IsString()
   @Transform(({ value }) =>
-    value !== undefined ? String(value).toUpperCase().trim() : undefined,
+    value !== undefined ? String(value).trim() : undefined,
   )
   @IsOptional()
   @ApiProperty()

@@ -8,7 +8,7 @@ import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly service: AuthService) {}
 
   @Post('login')
   @ApiOperation({ summary: 'Login' })
@@ -17,8 +17,8 @@ export class AuthController {
     type: AuthResponseDto,
   })
   async login(@Body() { email, password }: LoginDto) {
-    const user = await this.authService.validateUser(email, password);
-    return this.authService.login(user);
+    const user = await this.service.validateUser(email, password);
+    return this.service.login(user);
   }
 
   @Get('profile')
@@ -31,6 +31,6 @@ export class AuthController {
   })
   getProfile(@Req() req: Request) {
     const userId = req.user?.userId;
-    return this.authService.getProfile(userId!);
+    return this.service.getProfile(userId!);
   }
 }

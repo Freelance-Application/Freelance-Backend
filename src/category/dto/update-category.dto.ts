@@ -5,7 +5,7 @@ import { IsOptional, IsString } from 'class-validator';
 export class UpdateCategoryDto {
   @IsString()
   @Transform(({ value }) =>
-    value !== undefined ? String(value).toUpperCase().trim() : undefined,
+    value !== undefined ? String(value).trim() : undefined,
   )
   @IsOptional()
   @ApiProperty()

@@ -11,7 +11,7 @@ export class CreateProfileDto {
 
   @IsString()
   @ApiProperty()
-  @Transform(({ value }) => String(value).toLowerCase().trim())
+  @Transform(({ value }) => String(value).trim())
   bio: string;
 
   @IsArray()

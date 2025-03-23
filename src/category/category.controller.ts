@@ -21,7 +21,7 @@ import { CategoryDto } from './dto/category.dto';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly service: CategoryService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create category' })
@@ -33,7 +33,7 @@ export class CategoryController {
   @Roles(RoleUser.ADMIN)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+    return this.service.create(createCategoryDto);
   }
 
   @Get()
@@ -43,7 +43,7 @@ export class CategoryController {
     type: [CategoryDto],
   })
   async findAll() {
-    return this.categoryService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
@@ -53,7 +53,7 @@ export class CategoryController {
     type: CategoryDto,
   })
   async findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(id);
+    return this.service.findOne(id);
   }
 
   @Put(':id')
@@ -69,7 +69,7 @@ export class CategoryController {
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoryService.update(id, updateCategoryDto);
+    return this.service.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
@@ -83,6 +83,6 @@ export class CategoryController {
   @Roles(RoleUser.ADMIN)
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   async remove(@Param('id') id: string) {
-    return this.categoryService.remove(id);
+    return this.service.remove(id);
   }
 }

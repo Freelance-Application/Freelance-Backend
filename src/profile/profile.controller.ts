@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
   Put,
   Req,
@@ -17,7 +16,7 @@ import { Request } from 'express';
 
 @Controller('profile')
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(private readonly service: ProfileService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
@@ -28,7 +27,7 @@ export class ProfileController {
   })
   @ApiBearerAuth()
   create(@Req() req: Request, @Body() createProfileDto: CreateProfileDto) {
-    return this.profileService.create(req.user!.userId, createProfileDto);
+    return this.service.create(req.user!.userId, createProfileDto);
   }
 
   @Put()
@@ -40,17 +39,7 @@ export class ProfileController {
   })
   @ApiBearerAuth()
   update(@Req() req: Request, @Body() updateProfileDto: UpdateProfileDto) {
-    return this.profileService.update(req.user!.userId, updateProfileDto);
-  }
-
-  @Get(':id')
-  @ApiOperation({ summary: 'Get profile' })
-  @ApiResponse({
-    status: 200,
-    type: ProfileDto,
-  })
-  findOne(@Param('id') userId: string) {
-    return this.profileService.findByUserId(userId);
+    return this.service.update(req.user!.userId, updateProfileDto);
   }
 
   @Get()
@@ -60,6 +49,6 @@ export class ProfileController {
     type: [ProfileDto],
   })
   list() {
-    return this.profileService.list();
+    return this.service.list();
   }
 }
