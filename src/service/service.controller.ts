@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ServiceService } from './service.service';
@@ -28,5 +28,17 @@ export class ServiceController {
   })
   list() {
     return this.service.list();
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Delete service' })
+  @ApiResponse({
+    status: 201,
+    type: String,
+  })
+  @ApiBearerAuth()
+  delete() {
+    //return this.service.delete();
   }
 }
