@@ -1,7 +1,8 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ServiceService } from './service.service';
+import { CreateServiceDto } from './dto/create-service.dto';
 
 @Controller('service')
 export class ServiceController {
@@ -15,8 +16,8 @@ export class ServiceController {
     type: String,
   })
   @ApiBearerAuth()
-  create() {
-    return 'Service created';
+  create(@Body() createServiceDto: CreateServiceDto) {
+    return this.service.create(createServiceDto);
   }
 
   @Get()

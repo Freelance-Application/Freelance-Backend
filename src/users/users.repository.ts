@@ -21,7 +21,6 @@ export class UsersRepository {
   async findAll() {
     return this.database.user.findMany({
       where: { deletedAt: null },
-      include: { profile: true },
     });
   }
 

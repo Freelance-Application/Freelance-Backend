@@ -1,13 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserSkillDto } from 'src/user-skill/dto/user-skill.dto';
+import { InitialProfileDto } from './initial-profile.dto';
 
-export class ProfileDto {
-  @ApiProperty()
-  university: string;
-
-  @ApiProperty()
-  bio: string;
-
+export class ProfileDto extends InitialProfileDto {
   @ApiProperty({ description: 'Profile ID' })
   id: string;
 

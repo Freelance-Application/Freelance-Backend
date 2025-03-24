@@ -15,6 +15,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
+import { RoleUser } from '@prisma/client';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -35,6 +37,9 @@ export class UsersController {
     status: 200,
     type: [UserDto],
   })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @Roles(RoleUser.ADMIN)
   @ApiOperation({ summary: 'Find all users' })
   findAll() {
     return this.service.findAll();
