@@ -7,7 +7,11 @@ export class ServiceRepository {
   constructor(private readonly database: DatabaseService) {}
 
   async findAll() {
-    return this.database.service.findMany();
+    return this.database.service.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
   }
 
   async create(data: InitialServiceDto) {
