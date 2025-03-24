@@ -22,13 +22,16 @@ export class CategoryRepository {
   }
 
   async update(id: string, data: UpdateCategoryDto) {
-    return this.database.category.update({ where: { id }, data });
+    return this.database.category.update({
+      where: { id },
+      data: { ...data, updatedAt: new Date() },
+    });
   }
 
   async remove(id: string) {
     return this.database.category.update({
       where: { id },
-      data: { deletedAt: new Date() },
+      data: { deletedAt: new Date(), updatedAt: new Date() },
     });
   }
 

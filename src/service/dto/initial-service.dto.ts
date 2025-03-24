@@ -5,7 +5,7 @@ import { IsNumber, IsString } from 'class-validator';
 export class InitialServiceDto {
   @IsString()
   @ApiProperty()
-  @Transform(({ value }) => String(value).toUpperCase())
+  @Transform(({ value }) => String(value).trim())
   title: string;
 
   @IsString()

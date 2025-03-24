@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -14,6 +15,9 @@ import { ServiceService } from './service.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { Request } from 'express';
 import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
+import { ServiceDto } from './dto/service.dto';
+import { UpdateServiceDto } from './dto/update-service.dto';
+import { SearchServiceDto } from './dto/search-service.dto';
 
 @Controller('service')
 export class ServiceController {
@@ -24,7 +28,7 @@ export class ServiceController {
   @ApiOperation({ summary: 'Create service' })
   @ApiResponse({
     status: 201,
-    type: String,
+    type: ServiceDto,
   })
   @ApiBearerAuth()
   create(@Body() createServiceDto: CreateServiceDto, @Req() req: Request) {
@@ -32,14 +36,14 @@ export class ServiceController {
     return this.service.create(createServiceDto, user.userId);
   }
 
-  @Get()
+  @Post('list')
   @ApiOperation({ summary: 'List service' })
   @ApiResponse({
     status: 201,
-    type: String,
+    type: [ServiceDto],
   })
-  list() {
-    return this.service.list();
+  list(@Body() searchServiceDto: SearchServiceDto) {
+    return this.service.list(searchServiceDto);
   }
 
   @Delete(':id')
@@ -54,5 +58,32 @@ export class ServiceController {
   delete(@Param('id') id: string, @Req() req: Request) {
     const { user } = req;
     return this.service.delete(id, user.userId);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get service' })
+  @ApiResponse({
+    status: 201,
+    type: ServiceDto,
+  })
+  findOne(@Param('id') id: string) {
+    return this.service.findOne(id);
+  }
+
+  @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Update service' })
+  @ApiResponse({
+    status: 201,
+    type: ServiceDto,
+  })
+  @ApiBearerAuth()
+  update(
+    @Param('id') id: string,
+    @Body() createServiceDto: UpdateServiceDto,
+    @Req() req: Request,
+  ) {
+    const { user } = req;
+    return this.service.update(id, createServiceDto, user.userId);
   }
 }
