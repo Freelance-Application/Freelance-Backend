@@ -20,7 +20,8 @@
     "db:reset": "npx prisma migrate reset && rm -rf prisma/migrations",
     "db:migrate": "ts-node src/migrate.ts",
     "db:generate": "npx prisma generate",
-    "db:seed": "ts-node prisma/seed.ts"
+    "db:seed": "ts-node prisma/seed.ts",
+    "db:deploy": "npx prisma migrate deploy"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

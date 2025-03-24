@@ -89,6 +89,8 @@ model Service {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   deletedAt     DateTime?
+  reviewCount   Int           @default(0)
+  rating        Decimal       @db.Decimal(10, 2) @default(0)
 
   serviceCategories    ServiceCategory[]
   orders               Order[]
