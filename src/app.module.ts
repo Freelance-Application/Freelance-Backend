@@ -8,6 +8,13 @@ import { UserSkillModule } from './user-skill/user-skill.module';
 import { ServiceModule } from './service/service.module';
 import { CategoryModule } from './category/category.module';
 import { ServiceCategoryModule } from './service-category/service-category.module';
+import { OrderModule } from './order/order.module';
+import { ReviewModule } from './review/review.module';
+import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
+import { PaymentModule } from './payment/payment.module';
+import { FavoriteServiceModule } from './favorite-service/favorite-service.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -20,6 +27,13 @@ import { ServiceCategoryModule } from './service-category/service-category.modul
     ServiceModule,
     CategoryModule,
     ServiceCategoryModule,
+    OrderModule,
+    ReviewModule,
+    ChatModule,
+    MessageModule,
+    PaymentModule,
+    FavoriteServiceModule,
+    NotificationModule,
   ],
 })
 export class AppModule {}
