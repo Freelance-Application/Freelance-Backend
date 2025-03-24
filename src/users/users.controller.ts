@@ -10,44 +10,49 @@ import {
   Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { UserResponseDto } from './dto/user-response.dto';
+import { MessageResponseDto } from 'src/commons/dto/message-response.dto';
+import { RoleUser } from '@prisma/client';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly service: UsersService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({
     status: 201,
-    type: UserResponseDto,
+    type: UserDto,
   })
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    return this.service.create(createUserDto);
   }
 
   @Get()
   @ApiResponse({
     status: 200,
-    type: [UserResponseDto],
+    type: [UserDto],
   })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @Roles(RoleUser.ADMIN)
   @ApiOperation({ summary: 'Find all users' })
   findAll() {
-    return this.usersService.findAll();
+    return this.service.findAll();
   }
 
   @Get(':id')
   @ApiResponse({
     status: 200,
-    type: UserResponseDto,
+    type: UserDto,
   })
   @ApiOperation({ summary: 'Find user' })
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    return this.service.findOne(id);
   }
 
   @Put('')
@@ -56,21 +61,22 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
-    type: UserResponseDto,
+    type: UserDto,
   })
   update(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(req.user!.userId, updateUserDto);
+    return this.service.update(req.user!.userId, updateUserDto);
   }
 
   @Delete('')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remove user' })
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'User deleted successfully',
-    type: String,
+    type: MessageResponseDto,
   })
   remove(@Req() req: Request) {
-    return this.usersService.remove(req.user!.userId);
+    return this.service.remove(req.user!.userId);
   }
 }

@@ -12,7 +12,10 @@ export class UsersRepository {
   }
 
   async findByEmail(email: string) {
-    return this.database.user.findUnique({ where: { email } });
+    return this.database.user.findUnique({
+      where: { email },
+      include: { profile: true },
+    });
   }
 
   async findAll() {
@@ -22,17 +25,34 @@ export class UsersRepository {
   }
 
   async findById(id: string) {
-    return this.database.user.findUnique({ where: { id, deletedAt: null } });
+    return this.database.user.findUnique({
+      where: { id, deletedAt: null },
+      include: {
+        profile: {
+          include: {
+            skills: {
+              include: {
+                skill: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   async update(id: string, data: UpdateUserDto) {
-    return this.database.user.update({ where: { id }, data });
+    return this.database.user.update({
+      where: { id },
+      data: { ...data, updatedAt: new Date() },
+      include: { profile: true },
+    });
   }
 
   async delete(id: string, email: string) {
     return this.database.user.update({
       where: { id },
-      data: { deletedAt: new Date(), email },
+      data: { deletedAt: new Date(), email, updatedAt: new Date() },
     });
   }
 }
