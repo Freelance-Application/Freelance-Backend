@@ -47,7 +47,10 @@ export class UserSkillRepository {
       where: {
         id: userSkillId,
       },
-      data: userSkillDto,
+      data: {
+        ...userSkillDto,
+        updatedAt: new Date(),
+      },
       include: {
         skill: true,
       },

@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CategoryDto } from 'src/category/dto/category.dto';
 import { InitialServiceDto } from './initial-service.dto';
+import { UserDto } from 'src/users/dto';
+import { ServiceCategoryDto } from 'src/service-category/dto/service-category.dto';
 
 export class ServiceDto extends InitialServiceDto {
   @ApiProperty()
@@ -9,14 +10,17 @@ export class ServiceDto extends InitialServiceDto {
   @ApiProperty()
   reviewCount: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: '4.5' })
   rating: string;
 
   @ApiProperty()
   userId: number;
 
-  @ApiProperty({ type: CategoryDto })
-  category: CategoryDto;
+  @ApiProperty({ type: UserDto })
+  user: UserDto;
+
+  @ApiProperty({ type: [ServiceCategoryDto] })
+  serviceCategories: ServiceCategoryDto;
 
   @ApiProperty()
   createdAt: Date;
