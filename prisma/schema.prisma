@@ -32,6 +32,7 @@ model User {
   favoriteServices  FavoriteService[]
   reporter          Report[]  @relation("ReporterRelation")
   reported          Report[]  @relation("ReportedRelation")
+  services          Service[]
 
   @@index([name])
   @@index([lastname])
@@ -91,14 +92,18 @@ model Service {
   deletedAt     DateTime?
   reviewCount   Int           @default(0)
   rating        Decimal       @db.Decimal(10, 2) @default(0)
+  userId        String
 
   serviceCategories    ServiceCategory[]
   orders               Order[]
   favoriteServices     FavoriteService[]
+  user                 User   @relation(fields: [userId], references: [id])  
 
   @@index([title])
   @@index([description])
   @@index([deletedAt])
+  @@index([rating])
+  @@index([reviewCount])
 }
 
 model Category {
