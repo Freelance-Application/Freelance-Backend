@@ -27,7 +27,7 @@ export class ProfileController {
   })
   @ApiBearerAuth()
   create(@Req() req: Request, @Body() createProfileDto: CreateProfileDto) {
-    return this.service.create(req.user!.userId, createProfileDto);
+    return this.service.create(req.user.userId, createProfileDto);
   }
 
   @Put()
@@ -39,7 +39,7 @@ export class ProfileController {
   })
   @ApiBearerAuth()
   update(@Req() req: Request, @Body() updateProfileDto: UpdateProfileDto) {
-    return this.service.update(req.user!.userId, updateProfileDto);
+    return this.service.update(req.user.userId, updateProfileDto);
   }
 
   @Get()

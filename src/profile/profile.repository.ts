@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { CreateProfileDto, UpdateProfileDto } from './dto';
+import { userSelectFields } from 'src/commons/select-fields';
 
 @Injectable()
 export class ProfileRepository {
@@ -29,16 +30,7 @@ export class ProfileRepository {
           },
         },
         user: {
-          select: {
-            id: true,
-            name: true,
-            lastname: true,
-            email: true,
-            createdAt: true,
-            updatedAt: true,
-            deletedAt: true,
-            role: true,
-          },
+          select: userSelectFields,
         },
       },
     });
@@ -68,16 +60,7 @@ export class ProfileRepository {
           },
         },
         user: {
-          select: {
-            id: true,
-            name: true,
-            lastname: true,
-            email: true,
-            createdAt: true,
-            updatedAt: true,
-            deletedAt: true,
-            role: true,
-          },
+          select: userSelectFields,
         },
       },
       orderBy: {

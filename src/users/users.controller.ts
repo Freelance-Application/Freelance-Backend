@@ -64,7 +64,7 @@ export class UsersController {
     type: UserDto,
   })
   update(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
-    return this.service.update(req.user!.userId, updateUserDto);
+    return this.service.update(req.user.userId, updateUserDto);
   }
 
   @Delete('')
@@ -77,6 +77,6 @@ export class UsersController {
     type: MessageResponseDto,
   })
   remove(@Req() req: Request) {
-    return this.service.remove(req.user!.userId);
+    return this.service.remove(req.user.userId);
   }
 }

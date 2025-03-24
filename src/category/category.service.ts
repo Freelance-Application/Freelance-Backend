@@ -30,7 +30,10 @@ export class CategoryService {
 
   async remove(id: string) {
     const category = await this.findOne(id);
-    return this.repository.remove(category.id);
+    await this.repository.remove(category.id);
+    return {
+      msg: 'Category deleted successfully',
+    };
   }
 
   async findByIds(ids: string[]) {

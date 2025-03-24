@@ -31,6 +31,6 @@ export class AuthController {
   })
   getProfile(@Req() req: Request) {
     const userId = req.user?.userId;
-    return this.service.getProfile(userId!);
+    return this.service.getProfile(userId);
   }
 }
